@@ -1,37 +1,87 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="16dp">
+    android:padding="24dp"
+    android:gravity="center_horizontal"
+    android:background="#F8F9FA">
 
+    <!-- Logo en haut -->
+    <ImageView
+        android:id="@+id/ivLogo"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="40dp"
+        android:src="@drawable/logo_cityconnect"
+        android:contentDescription="Logo de l'application" />
+
+    <!-- Titre principal - ID modifié pour correspondre à votre code -->
     <TextView
         android:id="@+id/tvWelcome"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Bienvenue à City Connect"
-        android:textSize="24sp"
+        android:text="An Amazing App That Does It All"
+        android:textSize="28sp"
         android:textStyle="bold"
-        android:layout_marginBottom="20dp"/>
+        android:textColor="#1A1A1A"
+        android:layout_marginBottom="16dp"
+        android:gravity="center" />
 
     <TextView
         android:id="@+id/tvUserInfo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Connecté en tant que:"
-        android:layout_marginBottom="30dp"/>
+        android:text="Signaler à tout moment!"
+        android:textSize="18sp"
+        android:textColor="#666666"
+        android:layout_marginBottom="40dp"
+        android:gravity="center" />
 
+
+    <TextView
+        android:id="@+id/tvDescription"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text=""
+        android:textSize="16sp"
+        android:textColor="#333333"
+        android:lineSpacingExtra="4dp"
+        android:layout_marginBottom="60dp"
+        android:gravity="center" />
+
+    <!-- Bouton Voir les reports -->
     <Button
         android:id="@+id/btnViewReports"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="56dp"
         android:text="Voir les reports"
-        android:layout_marginBottom="16dp"/>
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:backgroundTint="#007BFF"
+        android:textColor="#FFFFFF"
+        android:layout_marginBottom="16dp"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
+        android:drawablePadding="12dp"
+        android:drawableStart="@drawable/ic_reports"
+        android:elevation="4dp" />
 
+    <!-- Bouton Se déconnecter -->
     <Button
         android:id="@+id/btnLogout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Se déconnecter"/>
+        android:layout_height="56dp"
+        android:text="Se déconnecter"
+        android:textSize="16sp"
+        android:backgroundTint="#6C757D"
+        android:textColor="#FFFFFF"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
+        android:drawablePadding="12dp"
+        android:drawableStart="@drawable/ic_logout"
+        android:elevation="4dp" />
 
 </LinearLayout>

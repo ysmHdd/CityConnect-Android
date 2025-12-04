@@ -1,64 +1,98 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="#121212">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="20dp">
+        android:padding="20dp"
+        android:background="#1E1E1E">
 
+        <!-- Champ Titre (ID ORIGINAL) -->
         <EditText
             android:id="@+id/etTitre"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="56dp"
             android:hint="Titre"
-            android:inputType="text"/>
+            android:inputType="text"
+            android:padding="16dp"
+            android:background="#2C2C2C"
+            android:textColor="#FFFFFF"
+            android:textColorHint="#888888"
+            android:elevation="2dp"/>
 
+        <!-- Champ Description (ID ORIGINAL) -->
         <EditText
             android:id="@+id/etDescription"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="120dp"
             android:hint="Description"
             android:inputType="textMultiLine"
-            android:lines="4"
             android:gravity="top"
-            android:layout_marginTop="8dp"/>
+            android:padding="16dp"
+            android:background="#2C2C2C"
+            android:textColor="#FFFFFF"
+            android:textColorHint="#888888"
+            android:layout_marginTop="8dp"
+            android:elevation="2dp"/>
 
+        <!-- Label Catégorie -->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Catégorie"
             android:textSize="16sp"
+            android:textColor="#BBBBBB"
             android:layout_marginTop="16dp"/>
 
+        <!-- Spinner Catégorie (ID ORIGINAL) -->
         <Spinner
             android:id="@+id/spinnerCategorie"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"/>
+            android:layout_height="56dp"
+            android:background="#2C2C2C"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:layout_marginTop="8dp"
+            android:popupBackground="#2C2C2C"/>
 
+        <!-- Label Priorité -->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Priorité (1 à 5)"
             android:textSize="16sp"
+            android:textColor="#BBBBBB"
             android:layout_marginTop="16dp"/>
 
+        <!-- Champ Priorité (ID ORIGINAL - CELUI QUE VOTRE CODE UTILISE) -->
         <EditText
             android:id="@+id/etPriorite"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="56dp"
             android:hint="Priorité"
-            android:inputType="number"/>
+            android:inputType="number"
+            android:padding="16dp"
+            android:background="#2C2C2C"
+            android:textColor="#FFFFFF"
+            android:textColorHint="#888888"
+            android:layout_marginTop="8dp"
+            android:elevation="2dp"/>
 
+        <!-- Bouton Sauvegarder (ID ORIGINAL) -->
         <Button
             android:id="@+id/btnSaveReport"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="56dp"
             android:text="Ajouter report"
+            android:textSize="16sp"
+            android:textStyle="bold"
             android:backgroundTint="#2196F3"
             android:textColor="#FFFFFF"
-            android:layout_marginTop="20dp"/>
+            android:layout_marginTop="20dp"
+            android:elevation="4dp"/>
+
     </LinearLayout>
 </ScrollView>
