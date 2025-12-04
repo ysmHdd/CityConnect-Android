@@ -1,16 +1,16 @@
 package com.example.tpsqlite
 
 import android.content.Intent
+import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
 import android.widget.ListView
-import androidx.appcompat.app.AppCompatActivity
 
-class MainActivity : AppCompatActivity() {
+class ReportsListActivity : AppCompatActivity() {
 
-    private lateinit var lvReports: ListView
-    private lateinit var btnAdd: Button
-    private lateinit var db: DataHelper
+    lateinit var lvReports: ListView
+    lateinit var btnAdd: Button
+    lateinit var db: DataHelper
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

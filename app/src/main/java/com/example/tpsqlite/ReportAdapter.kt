@@ -24,7 +24,8 @@ class ReportAdapter(
         val btnUpdate = view.findViewById<Button>(R.id.btnUpdateReport)
         val report = reports[position]
 
-        tvInfo.text = "${report.titre} - ${report.categorie} - ${report.statut} - ${report.priorite}"
+        tvInfo.text = "${report.titre} - ${report.categorie} - ${report.priorite}"
+        tvInfo.text = "${report.titre} - ${report.categorie} - ${report.priorite}"
 
         btnUpdate.setOnClickListener {
             val intent = Intent(context, AddReportActivity::class.java)

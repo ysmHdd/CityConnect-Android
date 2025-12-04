@@ -19,7 +19,16 @@ class AddReportActivity : AppCompatActivity() {
         val db = DataHelper(this)
 
         // Spinner categories
-        val categories = arrayOf("infrastructure", "environnement", "securite", "proprete", "urbanisme", "eau", "transport", "autre")
+        val categories = arrayOf(
+            "infrastructure",
+            "environnement",
+            "securite",
+            "proprete",
+            "urbanisme",
+            "eau",
+            "transport",
+            "autre"
+        )
         val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, categories)
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         spinnerCategorie.adapter = adapter
