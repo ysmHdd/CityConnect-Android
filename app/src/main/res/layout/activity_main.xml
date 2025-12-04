@@ -1,0 +1,30 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/tvTitre"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Liste des reports"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"/>
+
+    <ListView
+        android:id="@+id/lvReports"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvTitre"
+        android:layout_above="@id/btnAddReport" />
+
+    <Button
+        android:id="@+id/btnAddReport"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Ajouter report"
+        android:layout_alignParentBottom="true"
+        android:backgroundTint="#4CAF50"
+        android:textColor="#FFFFFF"/>
+</RelativeLayout>
