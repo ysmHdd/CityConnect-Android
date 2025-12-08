@@ -52,6 +52,19 @@
         android:layout_marginBottom="60dp"
         android:gravity="center" />
 
+    <Button
+        android:id="@+id/btnProfile"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:text="Mon Profil"
+        android:textSize="16sp"
+        android:backgroundTint="#17A2B8"
+        android:textColor="#FFFFFF"
+        android:drawableStart="@drawable/ic_profile"
+        android:drawablePadding="12dp"
+        android:layout_marginBottom="16dp" />
+
+
     <!-- Bouton Voir les reports -->
     <Button
         android:id="@+id/btnViewReports"

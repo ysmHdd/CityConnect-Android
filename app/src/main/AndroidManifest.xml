@@ -47,6 +47,12 @@
             android:label="Nouveau Report"
             android:windowSoftInputMode="adjustResize" />
 
+        <activity
+            android:name=".ProfileActivity"
+            android:exported="false"
+            android:label="Profile"
+            android:windowSoftInputMode="adjustResize" />
+
 
 
     </application>

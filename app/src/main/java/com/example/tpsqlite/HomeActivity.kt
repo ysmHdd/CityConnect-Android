@@ -13,6 +13,8 @@ class HomeActivity : AppCompatActivity() {
     private lateinit var btnViewReports: Button
     private lateinit var btnLogout: Button
     private lateinit var db: DataHelper
+    private lateinit var btnProfile: Button
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -23,6 +25,8 @@ class HomeActivity : AppCompatActivity() {
         btnViewReports = findViewById(R.id.btnViewReports)
         btnLogout = findViewById(R.id.btnLogout)
         db = DataHelper(this)
+        btnProfile = findViewById(R.id.btnProfile)
+
 
         // Afficher infos utilisateur
         val currentUser = db.getCurrentUser()
@@ -41,5 +45,11 @@ class HomeActivity : AppCompatActivity() {
             startActivity(intent)
             finish()
         }
+
+        btnProfile.setOnClickListener {
+            val intent = Intent(this, ProfileActivity::class.java)
+            startActivity(intent)
+        }
+
     }
 }
