@@ -41,10 +41,10 @@ class LoginActivity : AppCompatActivity() {
             }
 
             if (db.checkUser(email, password)) {
-                // RÉCUPÉRER L'UTILISATEUR D'ABORD
+
                 val user = db.getUserByEmail(email)
                 if (user != null) {
-                    // MAINTENANT ON PEUT PASSER L'OBJET USER
+
                     db.setUserLoggedIn(user)
                     Toast.makeText(this, "Connexion réussie !", Toast.LENGTH_SHORT).show()
                     goToHome()

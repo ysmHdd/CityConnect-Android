@@ -18,7 +18,7 @@ class AddReportActivity : AppCompatActivity() {
 
         val db = DataHelper(this)
 
-        // Spinner categories
+
         val categories = arrayOf(
             "infrastructure",
             "environnement",

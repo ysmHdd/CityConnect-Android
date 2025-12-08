@@ -15,21 +15,20 @@ class DataHelper(private val context: Context) :
         private const val DATABASE_NAME = "mabase_reports.db"
         private const val DATABASE_VERSION = 2
 
-        // Table REPORT (SIMPLIFIÉE - 4 champs)
         const val TABLE_REPORT = "REPORT"
         const val KEY_TITRE = "TITRE"
         const val KEY_DESCRIPTION = "DESCRIPTION"
         const val KEY_CATEGORIE = "CATEGORIE"
         const val KEY_PRIORITE = "PRIORITE"
 
-        // Table USERS
+
         const val TABLE_USERS = "USERS"
         const val KEY_USER_ID = "ID"
         const val KEY_NAME = "NAME"
         const val KEY_EMAIL = "EMAIL"
         const val KEY_PASSWORD = "PASSWORD"
 
-        // Table SESSION
+
         const val TABLE_SESSION = "SESSION"
         const val KEY_SESSION_ID = "ID"
         const val KEY_LOGGED_IN = "LOGGED_IN"
@@ -37,7 +36,7 @@ class DataHelper(private val context: Context) :
     }
 
     override fun onCreate(db: SQLiteDatabase) {
-        // Créer table REPORTS (SIMPLIFIÉE)
+
         val CREATE_TABLE_REPORT = ("CREATE TABLE $TABLE_REPORT (" +
                 "$KEY_TITRE TEXT PRIMARY KEY, " +
                 "$KEY_DESCRIPTION TEXT, " +
@@ -45,7 +44,7 @@ class DataHelper(private val context: Context) :
                 "$KEY_PRIORITE INTEGER)")
         db.execSQL(CREATE_TABLE_REPORT)
 
-        // Créer table USERS
+
         val CREATE_TABLE_USERS = ("CREATE TABLE $TABLE_USERS (" +
                 "$KEY_USER_ID INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 "$KEY_NAME TEXT, " +
@@ -53,7 +52,7 @@ class DataHelper(private val context: Context) :
                 "$KEY_PASSWORD TEXT)")
         db.execSQL(CREATE_TABLE_USERS)
 
-        // Créer table SESSION
+
         val CREATE_TABLE_SESSION = ("CREATE TABLE $TABLE_SESSION (" +
                 "$KEY_SESSION_ID INTEGER PRIMARY KEY, " +
                 "$KEY_LOGGED_IN INTEGER, " +
@@ -63,7 +62,7 @@ class DataHelper(private val context: Context) :
 
     override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
         if (oldVersion < 2) {
-            // Ajouter les nouvelles tables sans supprimer l'ancienne
+
             val CREATE_TABLE_USERS = ("CREATE TABLE IF NOT EXISTS $TABLE_USERS (" +
                     "$KEY_USER_ID INTEGER PRIMARY KEY AUTOINCREMENT, " +
                     "$KEY_NAME TEXT, " +
@@ -79,7 +78,6 @@ class DataHelper(private val context: Context) :
         }
     }
 
-    // ==================== METHODES POUR REPORTS ====================
 
     fun addReport(report: Report): Boolean {
         val db = this.writableDatabase
@@ -139,7 +137,6 @@ class DataHelper(private val context: Context) :
         return list
     }
 
-    // ==================== METHODES POUR USERS ====================
 
     fun addUser(name: String, email: String, password: String): Boolean {
         val db = this.writableDatabase
@@ -186,8 +183,7 @@ class DataHelper(private val context: Context) :
         }
     }
 
-    // ==================== METHODES POUR SESSION ====================
-
+   
     fun setUserLoggedIn(user: User?) {
         val db = this.writableDatabase
         db.delete(TABLE_SESSION, null, null)

@@ -10,7 +10,7 @@
         android:padding="20dp"
         android:background="#1E1E1E">
 
-        <!-- Champ Titre (ID ORIGINAL) -->
+
         <EditText
             android:id="@+id/etTitre"
             android:layout_width="match_parent"
@@ -23,7 +23,7 @@
             android:textColorHint="#888888"
             android:elevation="2dp"/>
 
-        <!-- Champ Description (ID ORIGINAL) -->
+
         <EditText
             android:id="@+id/etDescription"
             android:layout_width="match_parent"
@@ -38,7 +38,7 @@
             android:layout_marginTop="8dp"
             android:elevation="2dp"/>
 
-        <!-- Label Catégorie -->
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -47,7 +47,7 @@
             android:textColor="#BBBBBB"
             android:layout_marginTop="16dp"/>
 
-        <!-- Spinner Catégorie (ID ORIGINAL) -->
+
         <Spinner
             android:id="@+id/spinnerCategorie"
             android:layout_width="match_parent"
@@ -58,7 +58,7 @@
             android:layout_marginTop="8dp"
             android:popupBackground="#2C2C2C"/>
 
-        <!-- Label Priorité -->
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -67,7 +67,7 @@
             android:textColor="#BBBBBB"
             android:layout_marginTop="16dp"/>
 
-        <!-- Champ Priorité (ID ORIGINAL - CELUI QUE VOTRE CODE UTILISE) -->
+
         <EditText
             android:id="@+id/etPriorite"
             android:layout_width="match_parent"
@@ -81,7 +81,7 @@
             android:layout_marginTop="8dp"
             android:elevation="2dp"/>
 
-        <!-- Bouton Sauvegarder (ID ORIGINAL) -->
+
         <Button
             android:id="@+id/btnSaveReport"
             android:layout_width="match_parent"

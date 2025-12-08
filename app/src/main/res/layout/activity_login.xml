@@ -7,7 +7,7 @@
     android:padding="32dp"
     android:background="#FFFFFF">
 
-    <!-- LOGO AJOUTÉ -->
+
     <ImageView
         android:id="@+id/ivLogo"
         android:layout_width="100dp"

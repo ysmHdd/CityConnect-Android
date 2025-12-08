@@ -8,7 +8,6 @@
     android:gravity="center_horizontal"
     android:background="#F8F9FA">
 
-    <!-- Logo en haut -->
     <ImageView
         android:id="@+id/ivLogo"
         android:layout_width="120dp"
@@ -18,7 +17,7 @@
         android:src="@drawable/logo_cityconnect"
         android:contentDescription="Logo de l'application" />
 
-    <!-- Titre principal - ID modifié pour correspondre à votre code -->
+
     <TextView
         android:id="@+id/tvWelcome"
         android:layout_width="wrap_content"
@@ -65,7 +64,7 @@
         android:layout_marginBottom="16dp" />
 
 
-    <!-- Bouton Voir les reports -->
+
     <Button
         android:id="@+id/btnViewReports"
         android:layout_width="match_parent"
@@ -82,7 +81,7 @@
         android:drawableStart="@drawable/ic_reports"
         android:elevation="4dp" />
 
-    <!-- Bouton Se déconnecter -->
+
     <Button
         android:id="@+id/btnLogout"
         android:layout_width="match_parent"

@@ -23,19 +23,19 @@
             </intent-filter>
         </activity>
 
-        <!-- REGISTER - Pour créer un compte -->
+
         <activity
             android:name=".RegisterActivity"
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
 
-        <!-- HOME - Écran d'accueil après connexion -->
+
         <activity
             android:name=".HomeActivity"
             android:exported="false"
             android:label="Accueil" />
 
-        <!-- REPORTS LIST - Anciennement MainActivity -->
+
         <activity
             android:name=".ReportsListActivity"
             android:exported="false"

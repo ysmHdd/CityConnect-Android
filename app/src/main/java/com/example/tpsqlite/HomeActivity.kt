@@ -28,7 +28,7 @@ class HomeActivity : AppCompatActivity() {
         btnProfile = findViewById(R.id.btnProfile)
 
 
-        // Afficher infos utilisateur
+
         val currentUser = db.getCurrentUser()
         if (currentUser != null) {
             tvUserInfo.text = "Connecté en tant que: ${currentUser.name}"
