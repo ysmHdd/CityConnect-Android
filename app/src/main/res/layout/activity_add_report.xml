@@ -1,4 +1,5 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#121212">
@@ -10,7 +11,60 @@
         android:padding="20dp"
         android:background="#1E1E1E">
 
+        <!-- Section Photo du Report -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:layout_marginBottom="20dp">
 
+            <ImageView
+                android:id="@+id/ivReportPhoto"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:background="#2C2C2C"
+                android:scaleType="centerCrop"
+                android:src="@android:drawable/ic_menu_camera"
+                app:tint="#888888"
+                android:layout_marginBottom="10dp"/>
+
+            <!-- Boutons pour les photos -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="10dp">
+
+                <Button
+                    android:id="@+id/btnTakePhoto"
+                    android:layout_width="0dp"
+                    android:layout_height="40dp"
+                    android:layout_weight="1"
+                    android:text="📷 Caméra"
+                    android:textSize="13sp"
+                    android:backgroundTint="#4CAF50"
+                    android:textColor="#FFFFFF"
+                    android:layout_marginEnd="4dp"
+                    android:elevation="2dp"/>
+
+                <Button
+                    android:id="@+id/btnChoosePhoto"
+                    android:layout_width="0dp"
+                    android:layout_height="40dp"
+                    android:layout_weight="1"
+                    android:text="🖼️ Galerie"
+                    android:textSize="13sp"
+                    android:backgroundTint="#2196F3"
+                    android:textColor="#FFFFFF"
+                    android:layout_marginStart="4dp"
+                    android:elevation="2dp"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <!-- Champs du formulaire -->
         <EditText
             android:id="@+id/etTitre"
             android:layout_width="match_parent"
@@ -22,7 +76,6 @@
             android:textColor="#FFFFFF"
             android:textColorHint="#888888"
             android:elevation="2dp"/>
-
 
         <EditText
             android:id="@+id/etDescription"
@@ -38,7 +91,6 @@
             android:layout_marginTop="8dp"
             android:elevation="2dp"/>
 
-
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -46,7 +98,6 @@
             android:textSize="16sp"
             android:textColor="#BBBBBB"
             android:layout_marginTop="16dp"/>
-
 
         <Spinner
             android:id="@+id/spinnerCategorie"
@@ -58,7 +109,6 @@
             android:layout_marginTop="8dp"
             android:popupBackground="#2C2C2C"/>
 
-
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -66,7 +116,6 @@
             android:textSize="16sp"
             android:textColor="#BBBBBB"
             android:layout_marginTop="16dp"/>
-
 
         <EditText
             android:id="@+id/etPriorite"
@@ -81,18 +130,39 @@
             android:layout_marginTop="8dp"
             android:elevation="2dp"/>
 
-
-        <Button
-            android:id="@+id/btnSaveReport"
+        <!-- Ligne des boutons -->
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="56dp"
-            android:text="Ajouter report"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            android:backgroundTint="#2196F3"
-            android:textColor="#FFFFFF"
-            android:layout_marginTop="20dp"
-            android:elevation="4dp"/>
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="20dp">
+
+            <Button
+                android:id="@+id/btnCancel"
+                android:layout_width="0dp"
+                android:layout_height="56dp"
+                android:layout_weight="1"
+                android:text="Annuler"
+                android:textSize="16sp"
+                android:backgroundTint="#757575"
+                android:textColor="#FFFFFF"
+                android:layout_marginEnd="8dp"
+                android:elevation="4dp"/>
+
+            <Button
+                android:id="@+id/btnSaveReport"
+                android:layout_width="0dp"
+                android:layout_height="56dp"
+                android:layout_weight="1"
+                android:text="Ajouter report"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:backgroundTint="#2196F3"
+                android:textColor="#FFFFFF"
+                android:layout_marginStart="8dp"
+                android:elevation="4dp"/>
+
+        </LinearLayout>
 
     </LinearLayout>
 </ScrollView>

@@ -19,6 +19,7 @@ class DataHelper(private val context: Context) :
 
         // Table REPORT
         const val TABLE_REPORT = "REPORT"
+        const val KEY_ID = "ID"
         const val KEY_TITRE = "TITRE"
         const val KEY_DESCRIPTION = "DESCRIPTION"
         const val KEY_CATEGORIE = "CATEGORIE"
@@ -44,11 +45,13 @@ class DataHelper(private val context: Context) :
         const val KEY_COMMENT_TEXT = "COMMENT_TEXT"
         const val KEY_COMMENT_USER = "COMMENT_USER"
         const val KEY_COMMENT_DATE = "COMMENT_DATE"
+        const val KEY_PROFILE_PHOTO = "PROFILE_PHOTO"
     }
 
     override fun onCreate(db: SQLiteDatabase) {
         // Table des rapports
         val CREATE_TABLE_REPORT = ("CREATE TABLE $TABLE_REPORT (" +
+                "$KEY_ID INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 "$KEY_TITRE TEXT PRIMARY KEY, " +
                 "$KEY_DESCRIPTION TEXT, " +
                 "$KEY_CATEGORIE TEXT, " +
@@ -56,11 +59,13 @@ class DataHelper(private val context: Context) :
         db.execSQL(CREATE_TABLE_REPORT)
 
         // Table des utilisateurs - AVEC LES ANCIENS NOMS DE COLONNES
+        // Table des utilisateurs
         val CREATE_TABLE_USER = ("CREATE TABLE $TABLE_USER (" +
                 "$KEY_USER_ID INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 "$KEY_NAME TEXT, " +
                 "$KEY_EMAIL TEXT UNIQUE, " +
-                "$KEY_PASSWORD TEXT)")
+                "$KEY_PASSWORD TEXT, " +
+                "$KEY_PROFILE_PHOTO TEXT)") // AJOUTER CETTE COLONNE
         db.execSQL(CREATE_TABLE_USER)
 
         // Table de session
@@ -182,10 +187,18 @@ class DataHelper(private val context: Context) :
         return success > 0
     }
 
+    // Dans DataHelper.kt, assure-toi que cette méthode existe :
     fun deleteReport(report: Report) {
         val db = this.writableDatabase
         db.delete(TABLE_REPORT, "$KEY_TITRE = ?", arrayOf(report.titre))
+
+        // Optionnel: Supprimer aussi les commentaires associés
+        db.delete(TABLE_COMMENTS, "$KEY_REPORT_TITRE = ?", arrayOf(report.titre))
+
         db.close()
+
+        // Afficher un Toast de confirmation
+        Toast.makeText(context, "Report supprimé: ${report.titre}", Toast.LENGTH_SHORT).show()
     }
 
     fun getAllReports(): ArrayList<Report> {
@@ -208,6 +221,8 @@ class DataHelper(private val context: Context) :
         db.close()
         return list
     }
+
+
 
     // ================ MÉTHODES POUR LES UTILISATEURS ================
 
@@ -255,6 +270,26 @@ class DataHelper(private val context: Context) :
         }.also {
             cursor.close()
             db.close()
+        }
+    }
+
+    // Ajoute cette méthode dans la section MÉTHODES POUR LES UTILISATEURS
+    fun updateUserProfilePhoto(email: String, photoUri: String): Boolean {
+        val db = this.writableDatabase
+        val values = ContentValues().apply {
+            put(KEY_PROFILE_PHOTO, photoUri) // Assure-toi que KEY_PROFILE_PHOTO existe
+        }
+
+        // Mettre à jour la photo de profil de l'utilisateur
+        val success = db.update(TABLE_USER, values, "$KEY_EMAIL = ?", arrayOf(email))
+        db.close()
+
+        return if (success > 0) {
+            Toast.makeText(context, "Photo de profil mise à jour", Toast.LENGTH_SHORT).show()
+            true
+        } else {
+            Toast.makeText(context, "Erreur de mise à jour", Toast.LENGTH_SHORT).show()
+            false
         }
     }
 
@@ -313,6 +348,8 @@ class DataHelper(private val context: Context) :
         }
     }
 
+
+
     private fun getUserIdByEmail(email: String): Int {
         val db = this.readableDatabase
         val query = "SELECT $KEY_USER_ID FROM $TABLE_USER WHERE $KEY_EMAIL = ?"
@@ -332,11 +369,17 @@ class DataHelper(private val context: Context) :
         db.delete(TABLE_SESSION, null, null)
         db.close()
     }
+
+
 }
 
 // ==================== MODÈLES DE DONNÉES ====================
 
-data class User(val name: String, val email: String)
+data class User(
+    val name: String,
+    val email: String,
+    val profilePhotoUri: String = ""
+)
 data class Comment(
     val id: Int = 0,
     val reportTitre: String = "",

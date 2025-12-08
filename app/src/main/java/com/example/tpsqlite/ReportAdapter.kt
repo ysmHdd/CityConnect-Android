@@ -21,6 +21,7 @@ class ReportAdapter(
             .inflate(R.layout.report_item, parent, false)
 
         // Initialiser toutes les vues
+        val btnDelete = view.findViewById<Button>(R.id.btnDeleteReport)
         val tvInfo = view.findViewById<TextView>(R.id.tvReportInfo)
         val btnUpdate = view.findViewById<Button>(R.id.btnUpdateReport)
         val btnViewDetails = view.findViewById<Button>(R.id.btnViewDetails)
@@ -56,12 +57,14 @@ class ReportAdapter(
         }
 
         // ===== BOUTON "MODIFIER" =====
+        // Dans ReportAdapter.kt, dans le bouton Modifier, ajouter :
         btnUpdate.setOnClickListener {
             val intent = Intent(context, AddReportActivity::class.java).apply {
                 putExtra("titre", report.titre)
                 putExtra("description", report.description)
                 putExtra("categorie", report.categorie)
                 putExtra("priorite", report.priorite)
+                putExtra("photoUri", report.photoUri) // AJOUTER CETTE LIGNE
             }
             context.startActivity(intent)
         }
@@ -109,6 +112,37 @@ class ReportAdapter(
                 }
             } else {
                 Toast.makeText(context, "Saisissez un commentaire", Toast.LENGTH_SHORT).show()
+            }
+        }
+
+        // Dans ReportAdapter.kt, dans le onClick de btnDelete :
+        btnDelete.setOnClickListener {
+            val currentUser = db.getCurrentUser()
+
+            // Vérifier si l'utilisateur est connecté et s'il peut supprimer
+            if (currentUser != null) {
+                // Demander confirmation
+                val alertDialog = android.app.AlertDialog.Builder(context)
+                    .setTitle("Confirmation")
+                    .setMessage("Voulez-vous vraiment supprimer ce report : ${report.titre} ?")
+                    .setPositiveButton("Oui") { dialog, which ->
+                        // Supprimer le report
+                        db.deleteReport(report)
+
+                        // Supprimer de la liste locale
+                        reports.removeAt(position)
+
+                        // Notifier l'adapter du changement
+                        notifyDataSetChanged()
+
+                        Toast.makeText(context, "Report supprimé", Toast.LENGTH_SHORT).show()
+                    }
+                    .setNegativeButton("Annuler", null)
+                    .create()
+
+                alertDialog.show()
+            } else {
+                Toast.makeText(context, "Connectez-vous pour supprimer", Toast.LENGTH_SHORT).show()
             }
         }
 

@@ -20,6 +20,16 @@
             android:layout_marginBottom="20dp"
             android:elevation="4dp">
 
+            <!-- AJOUT: ImageView pour la photo du report -->
+            <ImageView
+                android:id="@+id/ivReportImage"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:scaleType="centerCrop"
+                android:background="#2C2C2C"
+                android:layout_marginBottom="16dp"
+                android:visibility="gone"/>
+
             <TextView
                 android:id="@+id/tvTitre"
                 android:layout_width="match_parent"
