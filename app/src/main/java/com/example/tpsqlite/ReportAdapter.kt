@@ -20,7 +20,7 @@ class ReportAdapter(
         val view = convertView ?: LayoutInflater.from(context)
             .inflate(R.layout.report_item, parent, false)
 
-        // Initialiser toutes les vues
+
         val btnDelete = view.findViewById<Button>(R.id.btnDeleteReport)
         val tvInfo = view.findViewById<TextView>(R.id.tvReportInfo)
         val btnUpdate = view.findViewById<Button>(R.id.btnUpdateReport)
@@ -34,18 +34,18 @@ class ReportAdapter(
         val report = reports[position]
         val db = DataHelper(context)
 
-        // Afficher les infos du rapport
+
         tvInfo.text = "${report.titre} - ${report.categorie} - Priorité: ${report.priorite}/5"
 
-        // Mettre à jour le bouton avec le nombre de commentaires
+
         val commentCount = try {
             db.getCommentCountForReport(report.titre)
         } catch (e: Exception) {
             0
         }
-        btnToggleComments.text = "💬 Commentaires ($commentCount)"
+        btnToggleComments.text = "Commentaires ($commentCount)"
 
-        // ===== BOUTON "VOIR DÉTAILS" =====
+
         btnViewDetails.setOnClickListener {
             val intent = Intent(context, ReportDetailsActivity::class.java).apply {
                 putExtra("titre", report.titre)
@@ -56,8 +56,7 @@ class ReportAdapter(
             context.startActivity(intent)
         }
 
-        // ===== BOUTON "MODIFIER" =====
-        // Dans ReportAdapter.kt, dans le bouton Modifier, ajouter :
+
         btnUpdate.setOnClickListener {
             val intent = Intent(context, AddReportActivity::class.java).apply {
                 putExtra("titre", report.titre)
@@ -69,22 +68,21 @@ class ReportAdapter(
             context.startActivity(intent)
         }
 
-        // ===== GESTION DES COMMENTAIRES INLINE =====
-        // Initialiser l'adapter des commentaires
+
         val commentAdapter = CommentAdapter(context, ArrayList())
         lvComments.adapter = commentAdapter
 
-        // Charger les commentaires au démarrage (optionnel)
+
         if (commentCount > 0) {
             loadComments(report.titre, commentAdapter, db)
         }
 
-        // Toggle pour afficher/masquer les commentaires
+
         btnToggleComments.setOnClickListener {
             val isVisible = layoutCommentsSection.visibility == View.VISIBLE
             if (isVisible) {
                 layoutCommentsSection.visibility = View.GONE
-                btnToggleComments.text = "💬 Commentaires ($commentCount)"
+                btnToggleComments.text = "Commentaires ($commentCount)"
             } else {
                 layoutCommentsSection.visibility = View.VISIBLE
                 btnToggleComments.text = "▼ Masquer"
@@ -92,7 +90,7 @@ class ReportAdapter(
             }
         }
 
-        // Ajouter un nouveau commentaire
+
         btnAddComment.setOnClickListener {
             val commentText = etNewComment.text.toString().trim()
             if (commentText.isNotEmpty()) {
@@ -103,7 +101,7 @@ class ReportAdapter(
                     etNewComment.text.clear()
                     Toast.makeText(context, "Commentaire ajouté", Toast.LENGTH_SHORT).show()
 
-                    // Recharger les commentaires et mettre à jour le compteur
+
                     loadComments(report.titre, commentAdapter, db)
                     val newCount = db.getCommentCountForReport(report.titre)
                     btnToggleComments.text = "▼ Masquer ($newCount)"
@@ -115,24 +113,24 @@ class ReportAdapter(
             }
         }
 
-        // Dans ReportAdapter.kt, dans le onClick de btnDelete :
+
         btnDelete.setOnClickListener {
             val currentUser = db.getCurrentUser()
 
-            // Vérifier si l'utilisateur est connecté et s'il peut supprimer
+
             if (currentUser != null) {
-                // Demander confirmation
+
                 val alertDialog = android.app.AlertDialog.Builder(context)
                     .setTitle("Confirmation")
                     .setMessage("Voulez-vous vraiment supprimer ce report : ${report.titre} ?")
                     .setPositiveButton("Oui") { dialog, which ->
-                        // Supprimer le report
+
                         db.deleteReport(report)
 
-                        // Supprimer de la liste locale
+
                         reports.removeAt(position)
 
-                        // Notifier l'adapter du changement
+
                         notifyDataSetChanged()
 
                         Toast.makeText(context, "Report supprimé", Toast.LENGTH_SHORT).show()
@@ -157,13 +155,13 @@ class ReportAdapter(
         }
         adapter.updateData(comments)
 
-        // Ajuster la hauteur de la ListView
+
         val totalHeight = minOf(comments.size * 120, 300) // Max 300dp
         adapter.notifyDataSetChanged()
     }
 }
 
-// ===== ADAPTER POUR LES COMMENTAIRES =====
+
 class CommentAdapter(
     private val context: Context,
     private var comments: ArrayList<Comment>

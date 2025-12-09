@@ -45,7 +45,6 @@ class AddReportActivity : AppCompatActivity() {
 
         db = DataHelper(this)
 
-        // Configurer les catégories
         val categories = arrayOf(
             "infrastructure",
             "environnement",
@@ -60,7 +59,7 @@ class AddReportActivity : AppCompatActivity() {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         spinnerCategorie.adapter = adapter
 
-        // Vérifier si on est en mode édition
+
         val titre = intent.getStringExtra("titre")
         val description = intent.getStringExtra("description")
         val categorie = intent.getStringExtra("categorie")
@@ -68,20 +67,19 @@ class AddReportActivity : AppCompatActivity() {
         val photoUri = intent.getStringExtra("photoUri")
 
         if (titre != null && titre.isNotEmpty()) {
-            // MODE ÉDITION
+
             isEditMode = true
             originalTitre = titre
 
-            // Pré-remplir les champs avec les données existantes
+
             etTitre.setText(titre)
             etDescription.setText(description ?: "")
             etPriorite.setText(priorite.toString())
 
-            // Désactiver le champ titre (c'est la clé primaire)
             etTitre.isEnabled = false
             etTitre.setBackgroundColor(Color.parseColor("#333333"))
 
-            // Charger la photo existante si elle existe
+
             if (!photoUri.isNullOrEmpty()) {
                 currentPhotoUri = photoUri
                 try {
@@ -91,17 +89,17 @@ class AddReportActivity : AppCompatActivity() {
                 }
             }
 
-            // Sélectionner la bonne catégorie dans le spinner
+
             val position = categories.indexOf(categorie)
             if (position >= 0) {
                 spinnerCategorie.setSelection(position)
             }
 
-            // Changer le texte du bouton
+
             btnSave.text = "Mettre à jour"
         }
 
-        // Bouton Prendre photo (caméra)
+
         btnTakePhoto.setOnClickListener {
             val takePictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
             if (takePictureIntent.resolveActivity(packageManager) != null) {
@@ -119,9 +117,9 @@ class AddReportActivity : AppCompatActivity() {
             }
         }
 
-        // Bouton Choisir photo (galerie)
+
         btnChoosePhoto.setOnClickListener {
-            // Vérifier et demander la permission si nécessaire
+
             if (checkStoragePermission()) {
                 openGallery()
             } else {

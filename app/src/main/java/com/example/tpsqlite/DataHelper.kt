@@ -15,7 +15,7 @@ class DataHelper(private val context: Context) :
 
     companion object {
         private const val DATABASE_NAME = "mabase_reports.db"
-        private const val DATABASE_VERSION = 5 // Augmenter à 5 pour forcer la recréation
+        private const val DATABASE_VERSION = 5
 
         // Table REPORT
         const val TABLE_REPORT = "REPORT"
@@ -25,12 +25,13 @@ class DataHelper(private val context: Context) :
         const val KEY_CATEGORIE = "CATEGORIE"
         const val KEY_PRIORITE = "PRIORITE"
 
-        // Table USER - REMETTRE LES ANCIENS NOMS DE COLONNES
+        // Table USER
         const val TABLE_USER = "USER"
         const val KEY_USER_ID = "ID"
-        const val KEY_NAME = "NAME"        // Ancien nom
-        const val KEY_EMAIL = "EMAIL"      // Ancien nom
-        const val KEY_PASSWORD = "PASSWORD" // Ancien nom
+        const val KEY_NAME = "NAME"
+        const val KEY_EMAIL = "EMAIL"
+        const val KEY_PASSWORD = "PASSWORD"
+        const val KEY_PROFILE_PHOTO = "PROFILE_PHOTO"
 
         // Table SESSION
         const val TABLE_SESSION = "SESSION"
@@ -45,49 +46,77 @@ class DataHelper(private val context: Context) :
         const val KEY_COMMENT_TEXT = "COMMENT_TEXT"
         const val KEY_COMMENT_USER = "COMMENT_USER"
         const val KEY_COMMENT_DATE = "COMMENT_DATE"
-        const val KEY_PROFILE_PHOTO = "PROFILE_PHOTO"
     }
 
     override fun onCreate(db: SQLiteDatabase) {
         // Table des rapports
-        val CREATE_TABLE_REPORT = ("CREATE TABLE $TABLE_REPORT (" +
-                "$KEY_ID INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                "$KEY_TITRE TEXT PRIMARY KEY, " +
-                "$KEY_DESCRIPTION TEXT, " +
-                "$KEY_CATEGORIE TEXT, " +
-                "$KEY_PRIORITE INTEGER)")
+        val CREATE_TABLE_REPORT = """
+            CREATE TABLE $TABLE_REPORT (
+                $KEY_ID INTEGER PRIMARY KEY AUTOINCREMENT,
+                $KEY_TITRE TEXT UNIQUE,
+                $KEY_DESCRIPTION TEXT,
+                $KEY_CATEGORIE TEXT,
+                $KEY_PRIORITE INTEGER
+            )
+        """.trimIndent()
         db.execSQL(CREATE_TABLE_REPORT)
 
-        // Table des utilisateurs - AVEC LES ANCIENS NOMS DE COLONNES
         // Table des utilisateurs
-        val CREATE_TABLE_USER = ("CREATE TABLE $TABLE_USER (" +
-                "$KEY_USER_ID INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                "$KEY_NAME TEXT, " +
-                "$KEY_EMAIL TEXT UNIQUE, " +
-                "$KEY_PASSWORD TEXT, " +
-                "$KEY_PROFILE_PHOTO TEXT)") // AJOUTER CETTE COLONNE
+        val CREATE_TABLE_USER = """
+            CREATE TABLE $TABLE_USER (
+                $KEY_USER_ID INTEGER PRIMARY KEY AUTOINCREMENT,
+                $KEY_NAME TEXT,
+                $KEY_EMAIL TEXT UNIQUE,
+                $KEY_PASSWORD TEXT,
+                $KEY_PROFILE_PHOTO TEXT
+            )
+        """.trimIndent()
         db.execSQL(CREATE_TABLE_USER)
 
         // Table de session
-        val CREATE_TABLE_SESSION = ("CREATE TABLE $TABLE_SESSION (" +
-                "$KEY_SESSION_ID INTEGER PRIMARY KEY, " +
-                "$KEY_LOGGED_IN INTEGER, " +
-                "$KEY_USER_ID_FK INTEGER)")
+        val CREATE_TABLE_SESSION = """
+            CREATE TABLE $TABLE_SESSION (
+                $KEY_SESSION_ID INTEGER PRIMARY KEY,
+                $KEY_LOGGED_IN INTEGER,
+                $KEY_USER_ID_FK INTEGER
+            )
+        """.trimIndent()
         db.execSQL(CREATE_TABLE_SESSION)
 
         // Table des commentaires
-        val CREATE_TABLE_COMMENTS = ("CREATE TABLE $TABLE_COMMENTS (" +
-                "$KEY_COMMENT_ID INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                "$KEY_REPORT_TITRE TEXT, " +
-                "$KEY_COMMENT_TEXT TEXT, " +
-                "$KEY_COMMENT_USER TEXT, " +
-                "$KEY_COMMENT_DATE TEXT, " +
-                "FOREIGN KEY($KEY_REPORT_TITRE) REFERENCES $TABLE_REPORT($KEY_TITRE) ON DELETE CASCADE)")
+        val CREATE_TABLE_COMMENTS = """
+            CREATE TABLE $TABLE_COMMENTS (
+                $KEY_COMMENT_ID INTEGER PRIMARY KEY AUTOINCREMENT,
+                $KEY_REPORT_TITRE TEXT,
+                $KEY_COMMENT_TEXT TEXT,
+                $KEY_COMMENT_USER TEXT,
+                $KEY_COMMENT_DATE TEXT,
+                FOREIGN KEY($KEY_REPORT_TITRE) REFERENCES $TABLE_REPORT($KEY_TITRE) ON DELETE CASCADE
+            )
+        """.trimIndent()
         db.execSQL(CREATE_TABLE_COMMENTS)
     }
 
     override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
-        // SIMPLIFIÉ : Supprimer et recréer toutes les tables
+        // Gestion des upgrades par version
+        if (oldVersion < 2) {
+            // Mises à jour pour la version 2
+        }
+        if (oldVersion < 3) {
+            // Mises à jour pour la version 3
+        }
+        if (oldVersion < 4) {
+            // Ajout de la colonne PROFILE_PHOTO pour la version 4
+            db.execSQL("ALTER TABLE $TABLE_USER ADD COLUMN $KEY_PROFILE_PHOTO TEXT")
+        }
+        if (oldVersion < 5) {
+            // Mises à jour pour la version 5
+            // Pas de changements structurels nécessaires
+        }
+    }
+
+    override fun onDowngrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
+
         db.execSQL("DROP TABLE IF EXISTS $TABLE_REPORT")
         db.execSQL("DROP TABLE IF EXISTS $TABLE_USER")
         db.execSQL("DROP TABLE IF EXISTS $TABLE_SESSION")
@@ -95,7 +124,7 @@ class DataHelper(private val context: Context) :
         onCreate(db)
     }
 
-    // ================ MÉTHODES POUR LES COMMENTAIRES ================
+
     fun addComment(reportTitre: String, commentText: String, userName: String): Boolean {
         val db = this.writableDatabase
         val dateFormat = SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.getDefault())
@@ -148,14 +177,8 @@ class DataHelper(private val context: Context) :
         return count
     }
 
-    fun deleteComment(commentId: Int): Boolean {
-        val db = this.writableDatabase
-        val success = db.delete(TABLE_COMMENTS, "$KEY_COMMENT_ID = ?", arrayOf(commentId.toString()))
-        db.close()
-        return success > 0
-    }
 
-    // ================ MÉTHODES POUR LES REPORTS ================
+
     fun addReport(report: Report): Boolean {
         val db = this.writableDatabase
         val values = ContentValues().apply {
@@ -187,17 +210,14 @@ class DataHelper(private val context: Context) :
         return success > 0
     }
 
-    // Dans DataHelper.kt, assure-toi que cette méthode existe :
     fun deleteReport(report: Report) {
         val db = this.writableDatabase
         db.delete(TABLE_REPORT, "$KEY_TITRE = ?", arrayOf(report.titre))
 
-        // Optionnel: Supprimer aussi les commentaires associés
         db.delete(TABLE_COMMENTS, "$KEY_REPORT_TITRE = ?", arrayOf(report.titre))
 
         db.close()
 
-        // Afficher un Toast de confirmation
         Toast.makeText(context, "Report supprimé: ${report.titre}", Toast.LENGTH_SHORT).show()
     }
 
@@ -224,21 +244,19 @@ class DataHelper(private val context: Context) :
 
 
 
-    // ================ MÉTHODES POUR LES UTILISATEURS ================
-
     fun addUser(name: String, email: String, password: String): Boolean {
         val db = this.writableDatabase
         val values = ContentValues().apply {
-            put(KEY_NAME, name)        // KEY_NAME = "NAME"
-            put(KEY_EMAIL, email)      // KEY_EMAIL = "EMAIL"
-            put(KEY_PASSWORD, password) // KEY_PASSWORD = "PASSWORD"
+            put(KEY_NAME, name)
+            put(KEY_EMAIL, email)
+            put(KEY_PASSWORD, password)
+
         }
 
         return try {
-            val result = db.insert(TABLE_USER, null, values)  // TABLE_USER = "USER"
+            val result = db.insert(TABLE_USER, null, values)
             result != -1L
         } catch (e: SQLiteConstraintException) {
-            // Email déjà utilisé
             false
         } finally {
             db.close()
@@ -247,7 +265,6 @@ class DataHelper(private val context: Context) :
 
     fun checkUser(email: String, password: String): Boolean {
         val db = this.readableDatabase
-        // CORRECT : TABLE_USER = "USER", KEY_EMAIL = "EMAIL", KEY_PASSWORD = "PASSWORD"
         val query = "SELECT * FROM $TABLE_USER WHERE $KEY_EMAIL = ? AND $KEY_PASSWORD = ?"
         val cursor = db.rawQuery(query, arrayOf(email, password))
         val exists = cursor.count > 0
@@ -264,7 +281,12 @@ class DataHelper(private val context: Context) :
         return if (cursor.moveToFirst()) {
             val name = cursor.getString(cursor.getColumnIndexOrThrow(KEY_NAME))
             val userEmail = cursor.getString(cursor.getColumnIndexOrThrow(KEY_EMAIL))
-            User(name, userEmail)
+            val profilePhoto = if (!cursor.isNull(cursor.getColumnIndexOrThrow(KEY_PROFILE_PHOTO))) {
+                cursor.getString(cursor.getColumnIndexOrThrow(KEY_PROFILE_PHOTO))
+            } else {
+                ""
+            }
+            User(name, userEmail, profilePhoto)
         } else {
             null
         }.also {
@@ -273,14 +295,13 @@ class DataHelper(private val context: Context) :
         }
     }
 
-    // Ajoute cette méthode dans la section MÉTHODES POUR LES UTILISATEURS
+
     fun updateUserProfilePhoto(email: String, photoUri: String): Boolean {
         val db = this.writableDatabase
         val values = ContentValues().apply {
-            put(KEY_PROFILE_PHOTO, photoUri) // Assure-toi que KEY_PROFILE_PHOTO existe
+            put(KEY_PROFILE_PHOTO, photoUri)
         }
 
-        // Mettre à jour la photo de profil de l'utilisateur
         val success = db.update(TABLE_USER, values, "$KEY_EMAIL = ?", arrayOf(email))
         db.close()
 
@@ -292,6 +313,7 @@ class DataHelper(private val context: Context) :
             false
         }
     }
+
 
     fun setUserLoggedIn(user: User?) {
         val db = this.writableDatabase
@@ -324,7 +346,7 @@ class DataHelper(private val context: Context) :
         return try {
             val db = this.readableDatabase
             val query = """
-                SELECT u.$KEY_NAME, u.$KEY_EMAIL 
+                SELECT u.$KEY_NAME, u.$KEY_EMAIL, u.$KEY_PROFILE_PHOTO 
                 FROM $TABLE_SESSION s 
                 JOIN $TABLE_USER u ON s.$KEY_USER_ID_FK = u.$KEY_USER_ID 
                 WHERE s.$KEY_LOGGED_IN = 1
@@ -335,7 +357,12 @@ class DataHelper(private val context: Context) :
             if (cursor.moveToFirst()) {
                 val name = cursor.getString(cursor.getColumnIndexOrThrow(KEY_NAME))
                 val email = cursor.getString(cursor.getColumnIndexOrThrow(KEY_EMAIL))
-                User(name, email)
+                val profilePhoto = if (!cursor.isNull(cursor.getColumnIndexOrThrow(KEY_PROFILE_PHOTO))) {
+                    cursor.getString(cursor.getColumnIndexOrThrow(KEY_PROFILE_PHOTO))
+                } else {
+                    ""
+                }
+                User(name, email, profilePhoto)
             } else {
                 null
             }.also {
@@ -348,8 +375,6 @@ class DataHelper(private val context: Context) :
         }
     }
 
-
-
     private fun getUserIdByEmail(email: String): Int {
         val db = this.readableDatabase
         val query = "SELECT $KEY_USER_ID FROM $TABLE_USER WHERE $KEY_EMAIL = ?"
@@ -361,6 +386,7 @@ class DataHelper(private val context: Context) :
             -1
         }.also {
             cursor.close()
+            db.close()
         }
     }
 
@@ -370,16 +396,15 @@ class DataHelper(private val context: Context) :
         db.close()
     }
 
-
 }
 
 // ==================== MODÈLES DE DONNÉES ====================
-
 data class User(
     val name: String,
     val email: String,
     val profilePhotoUri: String = ""
 )
+
 data class Comment(
     val id: Int = 0,
     val reportTitre: String = "",
@@ -387,3 +412,4 @@ data class Comment(
     val user: String = "",
     val date: String = ""
 )
+

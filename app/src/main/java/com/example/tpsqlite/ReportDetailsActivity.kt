@@ -17,7 +17,7 @@ class ReportDetailsActivity : AppCompatActivity() {
 
         db = DataHelper(this)
 
-        // Récupérer le report depuis l'intent
+
         val titre = intent.getStringExtra("titre") ?: ""
         val description = intent.getStringExtra("description") ?: ""
         val categorie = intent.getStringExtra("categorie") ?: ""
@@ -40,21 +40,21 @@ class ReportDetailsActivity : AppCompatActivity() {
         val etNewComment = findViewById<EditText>(R.id.etNewComment)
         val btnAddComment = findViewById<Button>(R.id.btnAddComment)
 
-        // Afficher les détails du report
+
         tvTitre.text = report.titre
         tvDescription.text = report.description
         tvCategorie.text = "Catégorie: ${report.categorie}"
         tvPriorite.text = "Priorité: ${report.priorite}/5"
 
-        // Date de création (simulée pour l'exemple)
+
         val dateFormat = SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.getDefault())
         val currentDate = dateFormat.format(Date())
         tvDate.text = "Posté le: $currentDate"
 
-        // Charger les commentaires
+
         loadComments(lvComments)
 
-        // Ajouter un commentaire
+
         btnAddComment.setOnClickListener {
             val commentText = etNewComment.text.toString().trim()
             if (commentText.isNotEmpty()) {
@@ -78,7 +78,7 @@ class ReportDetailsActivity : AppCompatActivity() {
         val comments = db.getCommentsForReport(report.titre)
 
         if (comments.isEmpty()) {
-            // Afficher un message si aucun commentaire
+
             val adapter = ArrayAdapter<String>(
                 this,
                 android.R.layout.simple_list_item_1,
@@ -86,9 +86,9 @@ class ReportDetailsActivity : AppCompatActivity() {
             )
             listView.adapter = adapter
         } else {
-            // Afficher les commentaires avec un format personnalisé
+
             val commentTexts = comments.map { comment ->
-                "👤 ${comment.user}\n📅 ${comment.date}\n${comment.text}"
+                "${comment.user}\n${comment.date}\n${comment.text}"
             }
 
             val adapter = ArrayAdapter<String>(

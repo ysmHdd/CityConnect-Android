@@ -2,54 +2,59 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F5F5F5">
+    android:background="@drawable/bg_premium_gradient">
 
+    <LinearLayout
+        android:id="@+id/header"
+        android:layout_width="match_parent"
+        android:layout_height="140dp"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:background="@drawable/glass_header"
+        android:elevation="10dp">
 
-    <ImageView
-        android:id="@+id/ivLogo"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:src="@drawable/logo_cityconnect"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="24dp"
-        android:contentDescription="Logo" />
+        <ImageView
+            android:id="@+id/ivLogo"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:src="@drawable/logo_cityconnect"
+            android:contentDescription="Logo"/>
 
-    <TextView
-        android:id="@+id/tvTitre"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Liste des reports"
-        android:textSize="28sp"
-        android:textStyle="bold"
-        android:textColor="#1A1A1A"
-        android:layout_centerHorizontal="true"
-        android:layout_below="@id/ivLogo"
-        android:layout_marginTop="16dp"
-        android:elevation="4dp"/>
+        <TextView
+            android:id="@+id/tvTitre"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Liste des Reports"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:textColor="#FFFFFF"
+            android:layout_marginTop="8dp"/>
+    </LinearLayout>
+
 
     <ListView
         android:id="@+id/lvReports"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/tvTitre"
+        android:layout_height="match_parent"
+        android:layout_below="@id/header"
         android:layout_above="@id/btnAddReport"
-        android:layout_marginTop="16dp"
         android:padding="16dp"
-        android:divider="#E0E0E0"
-        android:dividerHeight="1dp" />
+        android:divider="@android:color/transparent"
+        android:dividerHeight="12dp"
+        android:clipToPadding="false"/>
+
 
     <Button
         android:id="@+id/btnAddReport"
         android:layout_width="match_parent"
-        android:layout_height="56dp"
-        android:text="Ajouter report"
-        android:textSize="16sp"
+        android:layout_height="60dp"
+        android:text="Ajouter un Report"
+        android:textSize="17sp"
         android:textStyle="bold"
         android:layout_alignParentBottom="true"
-        android:backgroundTint="#4CAF50"
+        android:background="@drawable/btn_premium_3d"
         android:textColor="#FFFFFF"
-        android:layout_margin="16dp"
-        android:elevation="8dp"
-        android:padding="12dp"/>
+        android:layout_margin="20dp"
+        android:elevation="12dp"/>
 
 </RelativeLayout>
